@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useContext } from "react";
+
+import Form from "./components/Form/Form";
+import Layout from "./components/Layout/Layout";
+import { Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
+import StartingPage from "./components/StartingPage/StartingPage";
+import MailBoxContext from "./components/store/mailbox-context";
+
+
 
 function App() {
+  const mailCtx = useContext(MailBoxContext);
+
+  const isLoggedIn = mailCtx.isLoggedIn;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Switch>
+        {isLoggedIn && (<Route path="/startingpage" >
+          <StartingPage />
+        </Route>)}
+        <Route path='/login'>
+          <Form />
+        </Route>
+      </Switch>
+    </Layout>
+   
   );
 }
 
 export default App;
+
+
