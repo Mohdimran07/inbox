@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
-
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 import { useState } from "react";
 import { EditorState } from "draft-js";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const StartingPage = () => {
+  const history = useHistory();
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const emailInputRef = useRef();
   const subInputRef = useRef();
@@ -26,41 +26,29 @@ const StartingPage = () => {
     e.preventDefault();
     const emailValue = emailInputRef.current.value;
     const subjectValue = subInputRef.current.value;
-   const mailText = mail;
-   console.log(mailText)
+    const mailText = mail;
+    console.log(mailText);
 
     let string = localStorage.getItem("userId");
     let email = string.replace(/[&,+()$~%@.'":*?<>{}]/g, "");
     console.log(email);
 
-    // const response = await fetch("https://mail-box-eb925-default-rtdb.firebaseio.com/mail-data.json", {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //         emailValue, subjectValue, mailText
-    //     })
-    // });
-
-    // const data = await response.json();
-    // console.log(data);
-   
-    let url = "https://crudcrud.com/api/8b89288503e9440fa8423841ceeb1f8f";
-    let urlF = "https://mail-box-eb925-default-rtdb.firebaseio.com"
     axios
       .post(
         `https://mailbox-data-default-rtdb.firebaseio.com/maildata${email}.json`,
         {
           To: emailValue,
           sub: subjectValue,
-          mail: mailText
-          
+          mail: mailText,
         }
       )
       .then((res) => console.log(res))
       .catch((e) => console.log(e));
   };
+
+  // const backButtonHandler = () => {
+  //   history.replace('/inbox');
+  // };
   return (
     <section style={{ padding: "20px" }}>
       <h1>Welcome to mail Box</h1>
@@ -89,7 +77,9 @@ const StartingPage = () => {
       <div>
         <button onClick={submitHandler}>Send</button>
       </div>
-      <div></div>
+      <div>
+        {/* <button onClick={backButtonHandler}>Go Back</button> */}
+      </div>
     </section>
   );
 };

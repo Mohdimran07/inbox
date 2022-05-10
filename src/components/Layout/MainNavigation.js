@@ -1,18 +1,31 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import MailBoxContext from "../store/mailbox-context";
 
 const MainNavigation = () => {
+    const mailCtx = useContext(MailBoxContext);
+    const isLoggedIn = mailCtx.isLoggedIn;
     return (  
         <header>
-            <Link to='/home'>
-                <div>mailbox</div>
-            </Link>
+            <div>
+                {!isLoggedIn && (
+                     <Link to='/home'>
+                     <div>mailbox</div>
+                 </Link>
+                )}
+           
+            </div>
+           
             <nav>
                 <ul>
-                    <li>
+                    {!isLoggedIn && (
+                        <li>
                         <button>
                             <Link to='/login'>Login</Link>
                         </button>
                     </li>
+                    )}
+                   
                 </ul>
             </nav>
         </header>

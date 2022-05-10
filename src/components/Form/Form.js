@@ -34,7 +34,7 @@ const Form = () => {
            }).then((res) => {
                console.log(res.data);
                mailCtx.login(res.data.idToken, res.data.email);
-               history.replace('/startingpage');
+               history.replace('/inbox');
 
            }).catch((err) => {
                console.log(err)
